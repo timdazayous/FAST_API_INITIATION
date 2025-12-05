@@ -5,8 +5,9 @@ import os
 import pandas as pd
 from dotenv import load_dotenv 
 from pydantic import BaseModel
-from modules.df_tools import read_db, write_db, initialize_db
+from backend.modules.df_tools import read_db, write_db, initialize_db
 from typing import List
+
 load_dotenv()
 
 # modèles pydantic
