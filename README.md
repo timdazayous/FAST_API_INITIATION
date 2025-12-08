@@ -33,11 +33,16 @@ Colonnes:
 - `id`
 - `text`
 
-#### Commandes pour lancer le serveur uvicorn
+#### Commande pour lancer le serveur uvicorn
 
 `uvicorn chemin.nom:app --reload --log-level debug`
 
 #### Commandes pour le terminale pour faire un GET
+
 - `Powershell` : `Invoke-WebRequest -Method GET "http://127.0.0.1:8000/citation"`
 
 - `MAC Linux` : `CURL -X GET "http://127.0.0.1:8000/citation"`
+
+#### Commande pour streamlit
+
+`streamlit run frontend.\app.py`
