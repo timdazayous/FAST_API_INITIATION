@@ -4,21 +4,21 @@ import uvicorn
 import os 
 import pandas as pd
 from dotenv import load_dotenv 
-from pydantic import BaseModel
-from modules.df_tools import read_db, write_db, initialize_db
-from typing import List
-import random
+from pydantic import BaseModel, Field
 
+from modules.df_tools import read_db, write_db, initialize_db
+from typing import List, Annotated
+
+import random
 load_dotenv()
 
 # modèles pydantic
 class QuoteRequest(BaseModel):
-    text : str
+    text : str = Field(min_length=1, description="donnez un texte pour la citation")
 
 class QuoteResponse(BaseModel):
     id : int
-    text : str    
-
+    text : str
 
 # creation si besoin de la base de données
 initialize_db()
@@ -64,34 +64,29 @@ def read_all_quotes():
 
 
 @app.get("/read/{id}", response_model=QuoteResponse)
-def read_specific_quotes(id: int):
+def read_specific_quotes(id : int):
     # il me faut toutes les citations pour les connaitres
     df = read_db()
-
-    # filtrer par l'id concerné
+    # filtre par l'id concerné
     if id not in df.index:
         raise HTTPException(status_code=404, detail=f"Citation avec ID {id} non trouvée")
-    
     quote_data = df.loc[id].to_dict()
     quote_data['id'] = id
-
-    # retourne les resultats
+    # retourne les résultats
     return quote_data
 
 @app.get("/read/random/", response_model=QuoteResponse)
-def read_specific_quotes(id: int):
+def read_random_quotes():
     # il me faut toutes les citations pour les connaitres
     df = read_db()
-
-    # filtrer par l'id concerné
-    if id not in df.index:
-        raise HTTPException(status_code=404, detail=f"Citation avec ID {id} non trouvée")
+    # filtre par l'id concerné  
+    if df.empty:
+        raise HTTPException(status_code=404, detail=f"Citation avec aléatoire non trouvée")
     
     random_id = random.choice(df.index)
     quote_data = df.loc[random_id].to_dict()
-    quote_data['id'] = id
-
-    # retourne les resultats
+    quote_data['id'] = random_id
+    # retourne les résultats
     return quote_data
 
 if __name__ == "__main__":
