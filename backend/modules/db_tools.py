@@ -25,7 +25,7 @@ def get_session():
 
 def write_db(df: pd.DataFrame):
     #df.to_csv(CSV_FILE_PATH, index=True, index_label='id')
-    print("write_df\n", df)
+    #print("write_df\n", df)
     df.to_sql(
         TABLE_NAME,
         con=engine,
@@ -62,8 +62,8 @@ def read_db()->pd.DataFrame:
                 logger.info(f"NaN trouvé à la ligne {index}, colonne '{col}' remplacé par la valeur 'NULL'")
                 df.loc[index, col] = "NULL_REPLACEMENT_VALUE"
     
-    print("DATA =", data)
-    print("COLUMNS =", df.columns)
+    # print("DATA =", data)
+    # print("COLUMNS =", df.columns)
 
     return df
 
