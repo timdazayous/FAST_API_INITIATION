@@ -46,7 +46,7 @@ def read_db()->pd.DataFrame:
         quotes = session.query(Quote).all() # la liste des objets Quote
 
     # on veut transformer en dataframe comme dans df_tools 
-    # on parcout la liste quotes
+    # on créer une liste de dictionnaires id:text representant chaques row de quotes
     data = [{"id": q.id, "text": q.text} for q in quotes]
     
     if not data:
@@ -82,3 +82,4 @@ def initialize_db():
     else:
         Base.metadata.create_all(bind=engine) 
         logger.info(f"Base de données SQL {DB_FILE_PATH} créée")
+
