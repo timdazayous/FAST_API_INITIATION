@@ -21,7 +21,7 @@ TABLE_NAME = "quotes"
 #CSV_FILE_PATH = os.path.join("backend","data", "quotes_db.csv")
 
 def get_session():
-    return session_locale()
+    return session_locale() # permet de créer une session quand on en a besoin
 
 def write_db(df: pd.DataFrame):
     #df.to_csv(CSV_FILE_PATH, index=True, index_label='id')
